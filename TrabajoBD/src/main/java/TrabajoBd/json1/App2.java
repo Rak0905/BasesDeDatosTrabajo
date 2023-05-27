@@ -11,7 +11,7 @@ import com.fasterxml.jackson.databind.ObjectMapper;
  */
 public class App2 {
 	public static void main(String[] args) {
-		File f = new File("empresa.xml");
+		File f = new File("loteria.xml");
 		Apuestas e = null;
 		try {
 			e = new ObjectMapper().readValue(f, Apuestas.class);
