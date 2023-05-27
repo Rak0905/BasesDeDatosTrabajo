@@ -3,6 +3,7 @@ package TrabajoBd.json1;
 import java.sql.Date;
 import com.fasterxml.jackson.annotation.JsonInclude;
 import com.fasterxml.jackson.databind.ObjectMapper;
+@JsonInclude(JsonInclude.Include.NON_NULL)
 public class Apuestas {
 	private int id;
 	private String fecha;
