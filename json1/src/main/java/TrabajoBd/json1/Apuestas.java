@@ -21,6 +21,11 @@ public class Apuestas {
 		this.jugador = jugador;
 		this.sorteo = sorteo;
 	}
+	
+	public Apuestas() {
+		super();
+	}
+
 	public int getId() {
 		return id;
 	}
