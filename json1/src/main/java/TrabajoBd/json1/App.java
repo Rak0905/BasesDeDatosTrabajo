@@ -4,7 +4,6 @@ import java.io.File;
 import java.io.FileWriter;
 import java.io.PrintWriter;
 
-import com.fasterxml.jackson.annotation.JsonInclude;
 import com.fasterxml.jackson.databind.ObjectMapper;
 
 import java.io.IOException;
@@ -13,9 +12,6 @@ import java.io.IOException;
  * Hello world!
  *
  */
-
-
-@JsonInclude(JsonInclude.Include.NON_NULL)
 public class App {
 	public static void main(String[] args) {
 		
@@ -35,3 +31,4 @@ public class App {
 		}
 	}
 }
+

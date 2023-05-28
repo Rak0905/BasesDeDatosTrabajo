@@ -1,5 +1,6 @@
 package TrabajoBd.json1;
 
+
 public class Sorteo {
 private int id;
 private String fechaApertura;
@@ -14,6 +15,7 @@ public Sorteo(int id, String fechaApertura, String fechaCierre, String fechaCele
 	this.fechaCelebracion = fechaCelebracion;
 	this.combinacionGanadora = combinacionGenerosa;
 }
+
 public int getId() {
 	return id;
 }
