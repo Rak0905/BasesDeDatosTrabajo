@@ -19,6 +19,12 @@ public Sorteo(int id, String fechaApertura, String fechaCierre, String fechaCele
 	this.combinacionGanadora = combinacionGenerosa;
 }
 
+
+public Sorteo() {
+	super();
+}
+
+
 public int getId() {
 	return id;
 }

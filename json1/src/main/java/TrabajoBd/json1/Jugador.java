@@ -17,6 +17,11 @@ public Jugador(int id, String correo, String dni, String contraseña, double sal
 	this.contraseña = contraseña;
 	this.saldo = saldo;
 }
+
+public Jugador() {
+	super();
+}
+
 public int getId() {
 	return id;
 }
