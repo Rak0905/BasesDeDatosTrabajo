@@ -1,7 +1,6 @@
 package TrabajoBd.json1;
-import com.fasterxml.jackson.annotation.JsonInclude;
-import com.fasterxml.jackson.databind.ObjectMapper;
-@JsonInclude(JsonInclude.Include.NON_NULL)
+
+
 public class Sorteo {
 private int id;
 private String fechaApertura;
@@ -16,6 +15,7 @@ public Sorteo(int id, String fechaApertura, String fechaCierre, String fechaCele
 	this.fechaCelebracion = fechaCelebracion;
 	this.combinacionGanadora = combinacionGenerosa;
 }
+
 public int getId() {
 	return id;
 }
