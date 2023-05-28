@@ -1,5 +1,9 @@
 package TrabajoBd.json1;
 
+import com.fasterxml.jackson.annotation.JsonInclude;
+
+@JsonInclude(JsonInclude.Include.NON_NULL)
+
 public class Jugador {
 private int id;
 private String correo;
@@ -14,6 +18,11 @@ public Jugador(int id, String correo, String dni, String contraseña, double sal
 	this.contraseña = contraseña;
 	this.saldo = saldo;
 }
+
+public Jugador() {
+	super();
+}
+
 public int getId() {
 	return id;
 }
@@ -49,6 +58,7 @@ public String toString() {
 	return "Jugador [id=" + id + ", correo=" + correo + ", dni=" + dni + ", contraseña=" + contraseña + ", saldo="
 			+ saldo + "]";
 }
+
 
 
 }

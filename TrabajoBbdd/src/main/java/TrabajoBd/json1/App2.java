@@ -6,12 +6,12 @@ import java.io.IOException;
 import com.fasterxml.jackson.databind.ObjectMapper;
 
 /**
- * Hello world!
+ * App2 
  *
  */
 public class App2 {
 	public static void main(String[] args) {
-		File f = new File("loteria.xml");
+		File f = new File("Apuestas.json");
 		Apuestas e = null;
 		try {
 			e = new ObjectMapper().readValue(f, Apuestas.class);

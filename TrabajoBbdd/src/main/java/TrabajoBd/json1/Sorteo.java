@@ -1,5 +1,8 @@
 package TrabajoBd.json1;
 
+import com.fasterxml.jackson.annotation.JsonInclude;
+
+@JsonInclude(JsonInclude.Include.NON_NULL)
 
 public class Sorteo {
 private int id;
@@ -15,6 +18,12 @@ public Sorteo(int id, String fechaApertura, String fechaCierre, String fechaCele
 	this.fechaCelebracion = fechaCelebracion;
 	this.combinacionGanadora = combinacionGenerosa;
 }
+
+
+public Sorteo() {
+	super();
+}
+
 
 public int getId() {
 	return id;
@@ -46,6 +55,9 @@ public String getCombinacionGanadora() {
 public void setCombinacionGanadora(String combinacionGenerosa) {
 	this.combinacionGanadora = combinacionGenerosa;
 }
+
+
+
 @Override
 public String toString() {
 	return "Sorteo [id=" + id + ", fechaApertura=" + fechaApertura + ", fechaCierre=" + fechaCierre

@@ -5,6 +5,7 @@ import com.fasterxml.jackson.annotation.JsonInclude;
 import com.fasterxml.jackson.databind.ObjectMapper;
 @JsonInclude(JsonInclude.Include.NON_NULL)
 public class Apuestas {
+	
 	private int id;
 	private String fecha;
 	private String fechayHoraCelebracion;
@@ -21,6 +22,11 @@ public class Apuestas {
 		this.jugador = jugador;
 		this.sorteo = sorteo;
 	}
+	
+	public Apuestas() {
+		super();
+	}
+
 	public int getId() {
 		return id;
 	}

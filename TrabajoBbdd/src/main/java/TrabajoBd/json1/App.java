@@ -9,7 +9,7 @@ import com.fasterxml.jackson.databind.ObjectMapper;
 import java.io.IOException;
 
 /**
- * Hello world!
+ * Primera App
  *
  */
 public class App {
@@ -31,3 +31,4 @@ public class App {
 		}
 	}
 }
+
