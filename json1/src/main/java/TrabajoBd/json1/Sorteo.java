@@ -55,6 +55,7 @@ public String getCombinacionGanadora() {
 public void setCombinacionGanadora(String combinacionGenerosa) {
 	this.combinacionGanadora = combinacionGenerosa;
 }
+
 @Override
 public String toString() {
 	return "Sorteo [id=" + id + ", fechaApertura=" + fechaApertura + ", fechaCierre=" + fechaCierre
