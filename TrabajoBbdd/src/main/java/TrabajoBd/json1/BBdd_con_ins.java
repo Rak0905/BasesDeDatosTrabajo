@@ -54,6 +54,23 @@ public class BBdd_con_ins {
 			e.printStackTrace();
 			throw e;
 
+			
 		}
 	}
+	
+	public static void InsertarSorteo(Sorteo sorteo, Connection connection) {
+		PreparedStatement statement = null;
+		try {
+             
+                 String sql=    "INSERT INTO sorteo (fechaApertura,fechaCierre,fechaCelebracion,combinacionGanadora) VALUES (?, ?, ?, ?)";
+               statement = connection.prepareStatement(sql);
+            statement.setString(1, sorteo.getFechaApertura());
+            statement.setString(2,sorteo.getFechaCierre());
+            statement.setString(3,sorteo.getFechaCelebracion() );
+            statement.setString(4, sorteo.getCombinacionGanadora());
+            statement.executeUpdate();
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+    }
 }
