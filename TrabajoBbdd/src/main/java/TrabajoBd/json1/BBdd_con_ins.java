@@ -100,15 +100,25 @@ public class BBdd_con_ins {
 	public static void insertApuesta(Apuestas apuesta, Connection connection, int idSorteo, int id_jugador) {
 		PreparedStatement statement = null;
 		try {
+			// Verificar saldo suficiente del jugador
+			double saldoJugador = apuesta.getJugador().getSaldo();
+			double montoApuesta = 10.0; // Reemplaza 10.0 por el monto real de la apuesta
+			if (saldoJugador < montoApuesta) {
+				System.out.println("Saldo insuficiente. No se puede realizar la apuesta.");
 
-			String sql = "INSERT INTO apuesta (fecha, fechayHoraCelebracion, apuesta, jugador_id, sorteo_id) VALUES (?, ?, ?, ?, ?)";
-			statement = connection.prepareStatement(sql);
-			statement.setString(1, apuesta.getFecha());
-			statement.setString(2, apuesta.getFechayHoraCelebracion());
-			statement.setString(3, apuesta.getApuesta());
-			statement.setInt(4, id_jugador);
-			statement.setInt(5, idSorteo);
-			statement.executeUpdate();
+			} else {
+				apuesta.getJugador().setSaldo(saldoJugador - montoApuesta);
+	            updateSaldo(apuesta.getJugador(), connection); // Método para actualizar saldo del jugador
+	            
+				String sql = "INSERT INTO apuesta (fecha, fechayHoraCelebracion, apuesta, jugador_id, sorteo_id) VALUES (?, ?, ?, ?, ?)";
+				statement = connection.prepareStatement(sql);
+				statement.setString(1, apuesta.getFecha());
+				statement.setString(2, apuesta.getFechayHoraCelebracion());
+				statement.setString(3, apuesta.getApuesta());
+				statement.setInt(4, id_jugador);
+				statement.setInt(5, idSorteo);
+				statement.executeUpdate();
+			}
 		} catch (SQLException e) {
 			e.printStackTrace();
 		} finally {
@@ -159,4 +169,23 @@ public class BBdd_con_ins {
 		}
 		return id;
 	}
+	public static void updateSaldo(Jugador jugador, Connection connection) {
+        PreparedStatement statement = null;
+        try {
+            String sql = "UPDATE jugador SET saldo = ? WHERE id = ?";
+            statement = connection.prepareStatement(sql);
+            statement.setDouble(1, jugador.getSaldo());
+            statement.setInt(2, jugador.getId());
+            statement.executeUpdate();
+        } catch (SQLException e) {
+            e.printStackTrace();
+        } finally {
+            try {
+                if (statement != null) {
+                    statement.close();
+                }
+            } catch (SQLException e) {
+                e.printStackTrace();
+            }
+        }
 }
