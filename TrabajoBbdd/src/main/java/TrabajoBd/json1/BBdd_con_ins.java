@@ -40,8 +40,9 @@ public class BBdd_con_ins {
 		return connection;
 
 	}
+
 	/*
-	 * cerramos la conexion 
+	 * cerramos la conexion
 	 */
 	public void diconnect(Connection connection) throws SQLException {
 		try {
@@ -54,23 +55,108 @@ public class BBdd_con_ins {
 			e.printStackTrace();
 			throw e;
 
-			
 		}
 	}
-	
-	public static void InsertarSorteo(Sorteo sorteo, Connection connection) {
+
+	public static long InsertarSorteo(Sorteo sorteo, Connection connection) throws SQLException {
+		PreparedStatement statement = null;
+		ResultSet generatedKeys = null;
+		long id = 0;
+		try {
+
+			String sql = "INSERT INTO sorteo (fechaApertura,fechaCierre,fechaCelebracion,combinacionGanadora) VALUES (?, ?, ?, ?)";
+			statement = connection.prepareStatement(sql);
+			statement.setString(1, sorteo.getFechaApertura());
+			statement.setString(2, sorteo.getFechaCierre());
+			statement.setString(3, sorteo.getFechaCelebracion());
+			statement.setString(4, sorteo.getCombinacionGanadora());
+			if (statement.executeUpdate() > 0) {
+
+				generatedKeys = statement.getGeneratedKeys();
+
+				if (generatedKeys.next()) {
+
+					id = generatedKeys.getInt(1);
+
+				}
+			}
+			statement.executeUpdate();
+			return id;
+
+		} catch (SQLException e) {
+			e.printStackTrace();
+
+		} finally {
+			if (generatedKeys != null) {
+				generatedKeys.close();
+			}
+			if (statement != null) {
+				statement.close();
+			}
+		}
+		return id;
+	}
+
+	public static void insertApuesta(Apuestas apuesta, Connection connection, int idSorteo, int id_jugador) {
 		PreparedStatement statement = null;
 		try {
-             
-                 String sql=    "INSERT INTO sorteo (fechaApertura,fechaCierre,fechaCelebracion,combinacionGanadora) VALUES (?, ?, ?, ?)";
-               statement = connection.prepareStatement(sql);
-            statement.setString(1, sorteo.getFechaApertura());
-            statement.setString(2,sorteo.getFechaCierre());
-            statement.setString(3,sorteo.getFechaCelebracion() );
-            statement.setString(4, sorteo.getCombinacionGanadora());
-            statement.executeUpdate();
-        } catch (SQLException e) {
-            e.printStackTrace();
-        }
-    }
+
+			String sql = "INSERT INTO apuesta (fecha, fechayHoraCelebracion, apuesta, jugador_id, sorteo_id) VALUES (?, ?, ?, ?, ?)";
+			statement = connection.prepareStatement(sql);
+			statement.setString(1, apuesta.getFecha());
+			statement.setString(2, apuesta.getFechayHoraCelebracion());
+			statement.setString(3, apuesta.getApuesta());
+			statement.setInt(4, id_jugador);
+			statement.setInt(5, idSorteo);
+			statement.executeUpdate();
+		} catch (SQLException e) {
+			e.printStackTrace();
+		} finally {
+			try {
+				if (statement != null) {
+					statement.close();
+				}
+			} catch (SQLException e) {
+				e.printStackTrace();
+			}
+		}
+	}
+
+	public static long insertJugador(Jugador jugador, Connection connection) {
+		PreparedStatement statement = null;
+		ResultSet generatedKeys = null;
+		long id = 0;
+		try {
+			String sql = "INSERT INTO jugador (correo, dni, contraseña, saldo) VALUES (?, ?, ?, ?)";
+			statement = connection.prepareStatement(sql);
+			statement.setString(1, jugador.getCorreo());
+			statement.setString(2, jugador.getDni());
+			statement.setString(3, jugador.getContraseña());
+			statement.setDouble(4, jugador.getSaldo());
+			statement.executeUpdate();
+			if (statement.executeUpdate() > 0) {
+
+				generatedKeys = statement.getGeneratedKeys();
+
+				if (generatedKeys.next()) {
+
+					id = generatedKeys.getInt(1);
+
+				}
+			}
+			statement.executeUpdate();
+			return id;
+		} catch (SQLException e) {
+			e.printStackTrace();
+		} finally {
+			try {
+				if (statement != null) {
+					statement.close();
+				}
+			} catch (SQLException e) {
+				e.printStackTrace();
+			}
+		}
+		return id;
+	}
 }
