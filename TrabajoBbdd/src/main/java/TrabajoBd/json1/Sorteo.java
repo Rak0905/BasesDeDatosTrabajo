@@ -6,7 +6,6 @@ import com.fasterxml.jackson.annotation.JsonInclude;
 
 public class Sorteo {
 
-	private int id;
 	private String fechaApertura;
 	private String fechaCierre;
 	private String fechaCelebracion;
