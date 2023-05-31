@@ -187,5 +187,7 @@ public class BBdd_con_ins {
             } catch (SQLException e) {
                 e.printStackTrace();
             }
+       
         }
+}
 }

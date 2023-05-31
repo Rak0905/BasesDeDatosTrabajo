@@ -11,7 +11,7 @@ private String fechaCierre;
 private String fechaCelebracion;
 private String combinacionGanadora;
 public Sorteo( String fechaApertura, String fechaCierre, String fechaCelebracion, String combinacionGenerosa) {
-	super();
+
 
 	this.fechaApertura = fechaApertura;
 	this.fechaCierre = fechaCierre;
