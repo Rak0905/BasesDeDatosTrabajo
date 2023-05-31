@@ -12,21 +12,11 @@ public class Sorteo {
 	private String fechaCelebracion;
 	private String combinacionGanadora;
 
-	public Sorteo(int id, String fechaApertura, String fechaCierre, String fechaCelebracion,
-			String combinacionGenerosa) {
-		this.id = id;
+	public Sorteo(String fechaApertura, String fechaCierre, String fechaCelebracion, String combinacionGenerosa) {
 		this.fechaApertura = fechaApertura;
 		this.fechaCierre = fechaCierre;
 		this.fechaCelebracion = fechaCelebracion;
 		this.combinacionGanadora = combinacionGenerosa;
-	}
-
-	public Sorteo() {
-		super();
-	}
-
-	public int getId() {
-		return id;
 	}
 
 	public void setId(int id) {
