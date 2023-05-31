@@ -28,7 +28,6 @@ public class App {
 	        String jsonStringA = readFileAsString(apuesta);
 	        a.setApuesta(apuesta);
 	        
-	        
 		try {
 			// creación del flujo de salida
 			PrintWriter printWriter = new PrintWriter(new FileWriter(f));
