@@ -28,13 +28,11 @@ public class App {
 		String jsonStringA = readFileAsString(apuesta);
 		a.setApuesta(apuesta);
 
-		try {
-			// creación del flujo de salida
-			PrintWriter printWriter = new PrintWriter(new FileWriter(f));
+		// creación del flujo de salida
+		try (PrintWriter printWriter = new PrintWriter(new FileWriter(f));) {
 			String json2write = new ObjectMapper().writeValueAsString(a);
 			printWriter.print(json2write);
 			printWriter.flush();
-			printWriter.close();
 		} catch (IOException ex) {
 			System.out.println("Error: " + ex.getLocalizedMessage());
 		}
