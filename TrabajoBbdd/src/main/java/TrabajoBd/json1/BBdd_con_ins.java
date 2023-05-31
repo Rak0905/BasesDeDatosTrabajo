@@ -108,8 +108,8 @@ public class BBdd_con_ins {
 
 			} else {
 				apuesta.getJugador().setSaldo(saldoJugador - montoApuesta);
-	            updateSaldo(apuesta.getJugador(), connection); // Método para actualizar saldo del jugador
-	            
+				updateSaldo(apuesta.getJugador(), connection); // Método para actualizar saldo del jugador
+
 				String sql = "INSERT INTO apuesta (fecha, fechayHoraCelebracion, apuesta, jugador_id, sorteo_id) VALUES (?, ?, ?, ?, ?)";
 				statement = connection.prepareStatement(sql);
 				statement.setString(1, apuesta.getFecha());
@@ -169,23 +169,25 @@ public class BBdd_con_ins {
 		}
 		return id;
 	}
+
 	public static void updateSaldo(Jugador jugador, Connection connection) {
-        PreparedStatement statement = null;
-        try {
-            String sql = "UPDATE jugador SET saldo = ? WHERE id = ?";
-            statement = connection.prepareStatement(sql);
-            statement.setDouble(1, jugador.getSaldo());
-            statement.setInt(2, jugador.getId());
-            statement.executeUpdate();
-        } catch (SQLException e) {
-            e.printStackTrace();
-        } finally {
-            try {
-                if (statement != null) {
-                    statement.close();
-                }
-            } catch (SQLException e) {
-                e.printStackTrace();
-            }
-        }
+		PreparedStatement statement = null;
+		try {
+			String sql = "UPDATE jugador SET saldo = ? WHERE id = ?";
+			statement = connection.prepareStatement(sql);
+			statement.setDouble(1, jugador.getSaldo());
+			statement.setInt(2, jugador.getId());
+			statement.executeUpdate();
+		} catch (SQLException e) {
+			e.printStackTrace();
+		} finally {
+			try {
+				if (statement != null) {
+					statement.close();
+				}
+			} catch (SQLException e) {
+				e.printStackTrace();
+			}
+		}
+	}
 }

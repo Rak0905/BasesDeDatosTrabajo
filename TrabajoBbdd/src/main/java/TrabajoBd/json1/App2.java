@@ -6,7 +6,7 @@ import java.io.IOException;
 import com.fasterxml.jackson.databind.ObjectMapper;
 
 /**
- * App2 
+ * App2
  *
  */
 public class App2 {
