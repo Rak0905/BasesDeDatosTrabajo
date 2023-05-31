@@ -24,9 +24,10 @@ public class App {
 		  String filePath = "loteria.json";
 	        String jsonString = readFileAsString(filePath);
 	        s.setCombinacionGanadora(jsonString);
-	        String apuesta = "loteria.json";
+	        String apuesta = "apuesta.json";
 	        String jsonStringA = readFileAsString(apuesta);
-	        s.setCombinacionGanadora(jsonStringA);
+	        a.setApuesta(apuesta);
+	        
 	        
 		try {
 			// creación del flujo de salida
