@@ -19,8 +19,8 @@ public class Sorteo {
 		this.combinacionGanadora = combinacionGenerosa;
 	}
 
-	public void setId(int id) {
-		this.id = id;
+	public Sorteo() {
+		super();
 	}
 
 	public String getFechaApertura() {
