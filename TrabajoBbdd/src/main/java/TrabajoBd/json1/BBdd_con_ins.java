@@ -58,7 +58,7 @@ public class BBdd_con_ins {
 		}
 	}
 
-	public static long InsertarSorteo(Sorteo sorteo, Connection connection) throws SQLException {
+	public static long insertarSorteo(Sorteo sorteo, Connection connection) throws SQLException {
 		PreparedStatement statement = null;
 		ResultSet generatedKeys = null;
 		long id = 0;

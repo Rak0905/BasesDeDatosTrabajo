@@ -16,18 +16,21 @@ import java.io.IOException;
  */
 public class App {
 	public static void main(String[] args) {
+		// Creación de clases
 		Sorteo s = new Sorteo("2080-05-09", "2080-05-15", "2080-05-16", null);
 		Jugador j = new Jugador(1, "trabajo@gmail.com", "009997d", "1234A", 10);
 		Apuestas a = new Apuestas(1, "2080-05-09", "2080-05-16:10:14", null, j, s);
+		// Creación de ficheros
 		File f = new File("Apuestas.json");
 		String filePath = "loteria.json";
+
 		String jsonString = readFileAsString(filePath);
 		s.setCombinacionGanadora(jsonString);
 		String apuesta = "apuesta.json";
 		String jsonStringA = readFileAsString(apuesta);
 		a.setApuesta(apuesta);
 
-		// creación del flujo de salida
+		// Creación del flujo de salida
 		try (PrintWriter printWriter = new PrintWriter(new FileWriter(f));) {
 			String json2write = new ObjectMapper().writeValueAsString(a);
 			printWriter.print(json2write);
@@ -37,7 +40,7 @@ public class App {
 		}
 	}
 
-	// para leer json y pasr a json
+	// Para leer json y pasr a json
 	public static String readFileAsString(String filePath) {
 		StringBuilder stringBuilder = new StringBuilder();
 
