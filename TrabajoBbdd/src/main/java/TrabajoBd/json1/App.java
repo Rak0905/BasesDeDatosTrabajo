@@ -21,7 +21,7 @@ public class App {
 		Jugador j = new Jugador(1, "trabajo@gmail.com","009997d", "1234A", 10);
 		Apuestas a = new Apuestas(1, "2080-05-09","2080-05-16:10:14", null, j, s);
 		File f = new File("Apuestas.json");
-		  String filePath = "loteria.json";
+		  String filePath = "loteria2.json";
 	        String jsonString = readFileAsString(filePath);
 	        s.setCombinacionGanadora(jsonString);
 	        String apuesta = "apuesta.json";
