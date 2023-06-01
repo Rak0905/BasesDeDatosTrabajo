@@ -17,22 +17,27 @@ import java.io.IOException;
 public class App {
 	public static void main(String[] args) {
 		// Creación de clases
-		Sorteo s = new Sorteo("2080-05-09", "2080-05-15", "2080-05-16", null);
+		Sorteo s = new Sorteo("2016-01-01", "2016-01-11", "2016-01-12", null, "Euromillon");
+		Sorteo s2 = new Sorteo("2017-06-08", "2017-06-09", "2017-06-10", null, "Loteria Nacional");
 		Jugador j = new Jugador(1, "trabajo@gmail.com", "009997d", "1234A", 10);
-		Apuestas a = new Apuestas(1, "2080-05-09", "2080-05-16:10:14", null, j, s);
+		Apuestas e = new Apuestas(1, "2016-01-11", "2016-01-12:10:14", null, j, s);
+		Apuestas ln = new Apuestas(1, "2017-06-09", "2017-06-10::21:00", null, j, s2);
 		// Creación de ficheros
 		File f = new File("Apuestas.json");
-		String filePath = "loteria.json";
+		String filePath = "loteriaEuro.json";
+		String filePathN = "loteriaNacio.json";
 
 		String jsonString = readFileAsString(filePath);
+		String jsonStringN = readFileAsString(filePathN);
 		s.setCombinacionGanadora(jsonString);
+		s2.setCombinacionGanadora(jsonStringN);
 		String apuesta = "apuesta.json";
 		String jsonStringA = readFileAsString(apuesta);
-		a.setApuesta(apuesta);
+		e.setApuesta(apuesta);
 
 		// Creación del flujo de salida
 		try (PrintWriter printWriter = new PrintWriter(new FileWriter(f));) {
-			String json2write = new ObjectMapper().writeValueAsString(a);
+			String json2write = new ObjectMapper().writeValueAsString(e);
 			printWriter.print(json2write);
 			printWriter.flush();
 		} catch (IOException ex) {

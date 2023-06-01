@@ -10,12 +10,15 @@ public class Sorteo {
 	private String fechaCierre;
 	private String fechaCelebracion;
 	private String combinacionGanadora;
+	private String tipo;
 
-	public Sorteo(String fechaApertura, String fechaCierre, String fechaCelebracion, String combinacionGenerosa) {
+	public Sorteo(String fechaApertura, String fechaCierre, String fechaCelebracion, String combinacionGenerosa,
+			String tipo) {
 		this.fechaApertura = fechaApertura;
 		this.fechaCierre = fechaCierre;
 		this.fechaCelebracion = fechaCelebracion;
 		this.combinacionGanadora = combinacionGenerosa;
+		this.tipo = tipo;
 	}
 
 	public Sorteo() {
@@ -52,6 +55,14 @@ public class Sorteo {
 
 	public void setCombinacionGanadora(String combinacionGenerosa) {
 		this.combinacionGanadora = combinacionGenerosa;
+	}
+
+	public String getTipo() {
+		return tipo;
+	}
+
+	public void setTipo(String tipo) {
+		this.tipo = tipo;
 	}
 
 	@Override
