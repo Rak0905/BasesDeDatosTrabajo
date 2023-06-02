@@ -9,9 +9,10 @@ public class Jugador {
 	private String correo;
 	private String dni;
 	private String contraseña;
+	private String telefono;
 	private double saldo;
 
-	public Jugador(int id, String correo, String dni, String contraseña, double saldo) {
+	public Jugador(int id, String correo, String dni, String contraseña, String telefono, double saldo) {
 		this.id = id;
 		this.correo = correo;
 		this.dni = dni;
@@ -61,6 +62,14 @@ public class Jugador {
 
 	public void setSaldo(double saldo) {
 		this.saldo = saldo;
+	}
+
+	public String getTelefono() {
+		return telefono;
+	}
+
+	public void setTelefono(String telefono) {
+		this.telefono = telefono;
 	}
 
 	@Override

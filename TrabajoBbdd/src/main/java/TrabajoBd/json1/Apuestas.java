@@ -16,7 +16,6 @@ public class Apuestas {
 
 	public Apuestas(int id, String fecha, String fechayHoraCelebracion, String apuesta, Jugador jugador,
 			Sorteo sorteo) {
-		super();
 		this.id = id;
 		this.fecha = fecha;
 		this.fechayHoraCelebracion = fechayHoraCelebracion;

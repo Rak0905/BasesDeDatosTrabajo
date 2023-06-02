@@ -26,7 +26,7 @@ public class App {
 				TipoSorteo.EUROMILLONES);
 		Sorteo s2 = new Sorteo("2017-06-08", "2017-06-09", "2017-06-10", "numero-premiado:32987,reintegro:7",
 				TipoSorteo.LOTERIA_NACIONAL);
-		Jugador j = new Jugador(1, "trabajo@gmail.com", "009997d", "1234A", 10);
+		Jugador j = new Jugador(1, "trabajo@gmail.com", "009997d", "1234A", "112233445", 200);
 		Apuestas e = new Apuestas(1, "2016-01-11", "2016-01-12:10:14", "combinación:[1, 2, 3, 4, 5],estrellas:[1,2] ",
 				j, s);
 		Apuestas ln = new Apuestas(1, "2017-06-09", "2017-06-10::21:00", "numero-premiado:32977,reintegro:7", j, s2);

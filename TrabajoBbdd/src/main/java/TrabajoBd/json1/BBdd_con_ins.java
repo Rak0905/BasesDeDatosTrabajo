@@ -21,7 +21,7 @@ public class BBdd_con_ins {
 		try {
 
 			Class.forName("com.mysql.cj.jdbc.Driver");
-			connection = DriverManager.getConnection("jdbc:mysql://192.168.56.103:3306/socios?serverTimezone=UTC",
+			connection = DriverManager.getConnection("jdbc:mysql://192.168.56.103:3306/loteria?serverTimezone=UTC",
 					"furiosa", "Imperat0r!");
 
 			connection.setAutoCommit(false);
@@ -61,22 +61,19 @@ public class BBdd_con_ins {
 		try {
 
 			String sql = "INSERT INTO sorteo (fechaApertura,fechaCierre,fechaCelebracion,combinacionGanadora) VALUES (?, ?, ?, ?)";
-			statement = connection.prepareStatement(sql);
+			statement = connection.prepareStatement(sql,statement.RETURN_GENERATED_KEYS);
 			statement.setString(1, sorteo.getFechaApertura());
 			statement.setString(2, sorteo.getFechaCierre());
 			statement.setString(3, sorteo.getFechaCelebracion());
 			statement.setString(4, sorteo.getGanadora());
+			
 			if (statement.executeUpdate() > 0) {
-
 				generatedKeys = statement.getGeneratedKeys();
-
 				if (generatedKeys.next()) {
-
 					id = generatedKeys.getInt(1);
-
 				}
 			}
-			statement.executeUpdate();
+			connection.commit();
 			System.out.println("Se ha insertado sorteo");
 			return id;
 
@@ -107,15 +104,16 @@ public class BBdd_con_ins {
 				apuesta.getJugador().setSaldo(saldoJugador - montoApuesta);
 				updateSaldo(apuesta.getJugador(), connection); // Método para actualizar saldo del jugador
 
-				String sql = "INSERT INTO apuesta (fecha, fechayHoraCelebracion, apuesta, jugador_id, sorteo_id) VALUES (?, ?, ?, ?, ?)";
+				String sql = "INSERT INTO apuesta (precio, premio, fecha, apuesta, jugador_id, sorteo_id) VALUES (?, ?, ?, ?, ?)";
 				statement = connection.prepareStatement(sql);
 				statement.setString(1, apuesta.getFecha());
 				statement.setString(2, apuesta.getFechayHoraCelebracion());
 				statement.setString(3, apuesta.getApuesta());
 				statement.setInt(4, (int) idj);
 				statement.setInt(5, (int) ids1);
-				statement.executeUpdate();
+
 				System.out.println("Se ha insertado apuesta");
+//				statement.executeUpdate();
 			}
 		} catch (SQLException e) {
 			e.printStackTrace();
@@ -135,24 +133,20 @@ public class BBdd_con_ins {
 		ResultSet generatedKeys = null;
 		long id = 0;
 		try {
-			String sql = "INSERT INTO jugador (correo, dni, contraseña, saldo) VALUES (?, ?, ?, ?)";
-			statement = connection.prepareStatement(sql);
+			String sql = "INSERT INTO jugador (correo, dni, contraseña,telefono, saldo) VALUES (?, ?, ?, ?, ?)";
+			statement = connection.prepareStatement(sql, statement.RETURN_GENERATED_KEYS);
 			statement.setString(1, jugador.getCorreo());
 			statement.setString(2, jugador.getDni());
 			statement.setString(3, jugador.getContraseña());
-			statement.setDouble(4, jugador.getSaldo());
-			statement.executeUpdate();
+			statement.setString(4, jugador.getTelefono());
+			statement.setDouble(5, jugador.getSaldo());
 			if (statement.executeUpdate() > 0) {
-
 				generatedKeys = statement.getGeneratedKeys();
-
 				if (generatedKeys.next()) {
-
 					id = generatedKeys.getInt(1);
-
 				}
 			}
-			statement.executeUpdate();
+			connection.commit();
 			System.out.println("Se ha insertado jugador");
 			return id;
 		} catch (SQLException e) {
@@ -193,7 +187,7 @@ public class BBdd_con_ins {
 	public List<Apuestas> seleccionarApuestas(Connection connection) throws SQLException {
 		List<Apuestas> apuestas = new ArrayList<>();
 		ResultSet resultados = null;
-		String sql = "SELECT * FROM APUESTA  ";
+		String sql = "SELECT * FROM apuesta  ";
 
 		try {
 

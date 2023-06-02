@@ -5,7 +5,7 @@ import com.fasterxml.jackson.annotation.JsonInclude;
 @JsonInclude(JsonInclude.Include.NON_NULL)
 
 public class Sorteo {
-
+	
 	private String fechaApertura;
 	private String fechaCierre;
 	private String fechaCelebracion;
