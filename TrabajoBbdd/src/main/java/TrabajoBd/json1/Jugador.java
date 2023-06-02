@@ -12,7 +12,6 @@ public class Jugador {
 	private double saldo;
 
 	public Jugador(int id, String correo, String dni, String contraseña, double saldo) {
-		super();
 		this.id = id;
 		this.correo = correo;
 		this.dni = dni;

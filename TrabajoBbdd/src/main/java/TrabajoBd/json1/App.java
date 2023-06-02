@@ -21,7 +21,7 @@ public class App {
 		Sorteo s2 = new Sorteo("2017-06-08", "2017-06-09", "2017-06-10", null, "Loteria Nacional");
 		Jugador j = new Jugador(1, "trabajo@gmail.com", "009997d", "1234A", 10);
 		Apuestas e = new Apuestas(1, "2016-01-11", "2016-01-12:10:14", null, j, s);
-		Apuestas ln = new Apuestas(1, "2017-06-09", "2017-06-10::21:00", null, j, s2);
+		Apuestas ln = new Apuestas(1, "2017-06-09", "2017-06-10:21:00", null, j, s2);
 		// Creación de ficheros
 		File f = new File("Apuestas.json");
 		String filePath = "loteriaEuro.json";
@@ -34,18 +34,21 @@ public class App {
 		String apuesta = "apuesta.json";
 		String jsonStringA = readFileAsString(apuesta);
 		e.setApuesta(apuesta);
+		ln.setApuesta(apuesta);
 
 		// Creación del flujo de salida
 		try (PrintWriter printWriter = new PrintWriter(new FileWriter(f));) {
 			String json2write = new ObjectMapper().writeValueAsString(e);
+			String json2write2 = new ObjectMapper().writeValueAsString(ln);
 			printWriter.print(json2write);
+			printWriter.print(json2write2);
 			printWriter.flush();
 		} catch (IOException ex) {
 			System.out.println("Error: " + ex.getLocalizedMessage());
 		}
 	}
 
-	// Para leer json y pasr a json
+	// Para leer json y pasar a json
 	public static String readFileAsString(String filePath) {
 		StringBuilder stringBuilder = new StringBuilder();
 
