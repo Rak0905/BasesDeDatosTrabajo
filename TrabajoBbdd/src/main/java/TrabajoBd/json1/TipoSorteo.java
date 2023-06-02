@@ -1,5 +1,9 @@
 package TrabajoBd.json1;
-
+/**
+ * Creación enumerada del tipo de sorteo
+ * @author tamara
+ *
+ */
 public enum TipoSorteo {
 	LOTERIA_NACIONAL("Lotería Nacional"), 
 	QUINIELA("Quiniela"), 

@@ -16,7 +16,8 @@ import com.fasterxml.jackson.databind.ObjectMapper;
 import java.io.IOException;
 
 /**
- * Primera App
+ * Creación del main donde se crea todas las clases y se crea el json.
+ * @author tamara y raquel
  *
  */
 public class App {
@@ -60,7 +61,11 @@ public class App {
 		}
 	}
 
-	// Para leer json y pasr a json
+	/**
+	 * Para leer json y pasar a json
+	 * @param filePath
+	 * @return
+	 */
 	public static String readFileAsString(String filePath) {
 		StringBuilder stringBuilder = new StringBuilder();
 

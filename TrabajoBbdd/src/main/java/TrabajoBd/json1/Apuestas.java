@@ -3,6 +3,11 @@ package TrabajoBd.json1;
 import com.fasterxml.jackson.annotation.JsonInclude;
 
 @JsonInclude(JsonInclude.Include.NON_NULL)
+/**
+ * Creación de clase Apuestas
+ * @author Raquel
+ *
+ */
 public class Apuestas {
 
 	private int id;

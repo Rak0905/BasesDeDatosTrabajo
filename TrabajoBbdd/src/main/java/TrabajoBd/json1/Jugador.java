@@ -4,6 +4,11 @@ import com.fasterxml.jackson.annotation.JsonInclude;
 
 @JsonInclude(JsonInclude.Include.NON_NULL)
 
+/**
+ * Creación de clase Jugador
+ * @author Raquel
+ *
+ */
 public class Jugador {
 	private int id;
 	private String nombre;

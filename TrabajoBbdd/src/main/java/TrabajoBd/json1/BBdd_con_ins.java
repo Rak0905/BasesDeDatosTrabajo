@@ -1,10 +1,6 @@
 package TrabajoBd.json1;
 
-/*
- * Primero creamos el metodo para crear la conexion
- */
-import java.io.FileInputStream;
-import java.io.FileReader;
+
 import java.io.IOException;
 import java.sql.Connection;
 import java.sql.DriverManager;
@@ -14,7 +10,20 @@ import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.List;
 
+/**
+ * Clase donde se hace la conexión y la desconexión de bbdd, y los metodos necesarios para añadir.
+ * @author tamara y raquel
+ *
+ */
 public class BBdd_con_ins {
+	
+	/**
+	 * Metodo para conectarnos
+	 * @return
+	 * @throws ClassNotFoundException
+	 * @throws SQLException
+	 * @throws IOException
+	 */
 	public Connection createConection() throws ClassNotFoundException, SQLException, IOException {
 		Connection connection = null;
 
@@ -38,7 +47,7 @@ public class BBdd_con_ins {
 	}
 
 	/*
-	 * cerramos la conexion
+	 * Metodo para cerrar la conexión
 	 */
 	public void diconnect(Connection connection) throws SQLException {
 		try {
@@ -54,6 +63,13 @@ public class BBdd_con_ins {
 		}
 	}
 
+	/**
+	 * Metodo para insertar el sorteo a la bbdd
+	 * @param sorteo
+	 * @param connection
+	 * @return
+	 * @throws SQLException
+	 */
 	public static long insertarSorteo(Sorteo sorteo, Connection connection) throws SQLException {
 		PreparedStatement statement = null;
 		ResultSet generatedKeys = null;
@@ -61,6 +77,7 @@ public class BBdd_con_ins {
 		try {
 
 			String sql = "INSERT INTO sorteo (fechaApertura,fechaCierre,fechaCelebracion,ganadora) VALUES (?, ?, ?, ?)";
+			//Devolvemos el id
 			statement = connection.prepareStatement(sql, statement.RETURN_GENERATED_KEYS);
 			statement.setString(1, sorteo.getFechaApertura());
 			statement.setString(2, sorteo.getFechaCierre());
@@ -91,6 +108,13 @@ public class BBdd_con_ins {
 		return id;
 	}
 
+	/**
+	 * Metodo para insertar las apuestas en la bbdd
+	 * @param apuesta
+	 * @param connection
+	 * @param s
+	 * @param idj
+	 */
 	public static void insertApuesta(Apuestas apuesta, Connection connection, long s, long idj) {
 		PreparedStatement statement = null;
 		try {
@@ -132,12 +156,19 @@ public class BBdd_con_ins {
 		}
 	}
 
+	/**
+	 * Metodo para insertar el jugador a la bbdd
+	 * @param jugador
+	 * @param connection
+	 * @return
+	 */
 	public static long insertJugador(Jugador jugador, Connection connection) {
 		PreparedStatement statement = null;
 		ResultSet generatedKeys = null;
 		long id = 0;
 		try {
 			String sql = "INSERT INTO jugador (nombre, correo, dni, contraseña,telefono, saldo) VALUES (?, ?, ?, ?, ?, ?)";
+			//Devolvemos el id
 			statement = connection.prepareStatement(sql, statement.RETURN_GENERATED_KEYS);
 			statement.setString(1, jugador.getNombre());
 			statement.setString(2, jugador.getCorreo());
@@ -168,7 +199,12 @@ public class BBdd_con_ins {
 		return id;
 	}
 
-	public static void updateSaldo(Jugador jugador, Connection connection) {
+	/**
+	 * Metodo para actualizar el saldo
+	 * @param jugador
+	 * @param connection
+	 */
+	private static void updateSaldo(Jugador jugador, Connection connection) {
 		PreparedStatement statement = null;
 		try {
 			String sql = "UPDATE jugador SET saldo = ? WHERE id = ?";
@@ -189,6 +225,12 @@ public class BBdd_con_ins {
 		}
 	}
 
+	/**
+	 * Metodo donde devuelve una lista de las apuestas
+	 * @param connection
+	 * @return
+	 * @throws SQLException
+	 */
 	public List<Apuestas> seleccionarApuestas(Connection connection) throws SQLException {
 		List<Apuestas> apuestas = new ArrayList<>();
 		ResultSet resultados = null;

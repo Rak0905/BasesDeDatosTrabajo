@@ -12,6 +12,11 @@ import com.fasterxml.jackson.databind.ObjectMapper;
 import com.fasterxml.jackson.core.type.TypeReference;
 import java.util.List;
 
+/**
+ * Clase el cual coge un json y lo guarda en una lista
+ * @author Raquel
+ *
+ */
 public class App2 {
 	public static void main(String[] args) {
 		File file = new File("Apuestas.json");

@@ -4,6 +4,11 @@ import com.fasterxml.jackson.annotation.JsonInclude;
 
 @JsonInclude(JsonInclude.Include.NON_NULL)
 
+/**
+ * Creación de sorteo
+ * @author tamara
+ *
+ */
 public class Sorteo {
 	
 	private String fechaApertura;

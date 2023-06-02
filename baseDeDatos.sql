@@ -3,6 +3,7 @@ CREATE DATABASE loteria;
 use loteria;
 CREATE TABLE IF NOT EXISTS jugador (
     id serial,
+    nombre VARCHAR(100) NOT NULL,
     correo VARCHAR(100) NOT NULL,
     dni varchar(9) not null,
     contraseña VARCHAR(100) NOT NULL,
@@ -15,8 +16,8 @@ CREATE TABLE IF NOT EXISTS sorteo (
     id serial,
 	fechaApertura date,
 	fechaCierre date,
-    fechaCelebracion dateTime,
-    combinacionGanadora varchar(500),
+    fechaCelebracion date,
+    ganadora varchar(500),
     PRIMARY KEY (id)
 );
 
