@@ -16,6 +16,7 @@ public class Apuestas {
 
 	public Apuestas(int id, String fecha, String fechayHoraCelebracion, String apuesta, Jugador jugador,
 			Sorteo sorteo) {
+		super();
 		this.id = id;
 		this.fecha = fecha;
 		this.fechayHoraCelebracion = fechayHoraCelebracion;
@@ -74,6 +75,20 @@ public class Apuestas {
 
 	public void setSorteo(Sorteo sorteo) {
 		this.sorteo = sorteo;
+	}
+
+	public void haGanado(Sorteo sorteo) {
+
+		if (sorteo.getGanadora() != null) {
+			if (sorteo.getGanadora().equals(apuesta)) {
+				System.out.println("HA GANADO");
+			} else {
+				System.out.println("ha perdido");
+			}
+		} else {
+			System.out.println("No se ha celebrado el sorteo");
+		}
+
 	}
 
 	@Override

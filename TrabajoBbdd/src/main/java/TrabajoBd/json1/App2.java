@@ -7,19 +7,27 @@ import com.fasterxml.jackson.databind.ObjectMapper;
 
 /**
  * App2
- *
+ * 
  */
+import com.fasterxml.jackson.core.type.TypeReference;
+import java.util.List;
+
 public class App2 {
 	public static void main(String[] args) {
-		File f = new File("Apuestas.json");
-		Apuestas e = null;
+		File file = new File("Apuestas.json");
+		List<Apuestas> apuestas = null;
 		try {
-			e = new ObjectMapper().readValue(f, Apuestas.class);
+			ObjectMapper objectMapper = new ObjectMapper();
+			apuestas = objectMapper.readValue(file, new TypeReference<List<Apuestas>>() {
+			});
 		} catch (IOException ex) {
 			System.out.println("Error: " + ex.getLocalizedMessage());
 		}
-		if (e != null) {
-			System.out.println(e);
+		if (apuestas != null) {
+			for (Apuestas apuesta : apuestas) {
+				System.out.println(apuesta);
+
+			}
 		}
 	}
 }

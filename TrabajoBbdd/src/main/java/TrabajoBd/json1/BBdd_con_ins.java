@@ -11,12 +11,8 @@ import java.sql.DriverManager;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
-import java.sql.Statement;
 import java.util.ArrayList;
 import java.util.List;
-import java.util.Properties;
-
-import javax.annotation.processing.Generated;
 
 public class BBdd_con_ins {
 	public Connection createConection() throws ClassNotFoundException, SQLException, IOException {
@@ -69,7 +65,7 @@ public class BBdd_con_ins {
 			statement.setString(1, sorteo.getFechaApertura());
 			statement.setString(2, sorteo.getFechaCierre());
 			statement.setString(3, sorteo.getFechaCelebracion());
-			statement.setString(4, sorteo.getCombinacionGanadora());
+			statement.setString(4, sorteo.getGanadora());
 			if (statement.executeUpdate() > 0) {
 
 				generatedKeys = statement.getGeneratedKeys();
@@ -81,6 +77,7 @@ public class BBdd_con_ins {
 				}
 			}
 			statement.executeUpdate();
+			System.out.println("Se ha insertado sorteo");
 			return id;
 
 		} catch (SQLException e) {
@@ -97,7 +94,7 @@ public class BBdd_con_ins {
 		return id;
 	}
 
-	public static void insertApuesta(Apuestas apuesta, Connection connection, int idSorteo, int id_jugador) {
+	public static void insertApuesta(Apuestas apuesta, Connection connection, long ids1, long idj) {
 		PreparedStatement statement = null;
 		try {
 			// Verificar saldo suficiente del jugador
@@ -115,9 +112,10 @@ public class BBdd_con_ins {
 				statement.setString(1, apuesta.getFecha());
 				statement.setString(2, apuesta.getFechayHoraCelebracion());
 				statement.setString(3, apuesta.getApuesta());
-				statement.setInt(4, id_jugador);
-				statement.setInt(5, idSorteo);
+				statement.setInt(4, (int) idj);
+				statement.setInt(5, (int) ids1);
 				statement.executeUpdate();
+				System.out.println("Se ha insertado apuesta");
 			}
 		} catch (SQLException e) {
 			e.printStackTrace();
@@ -155,6 +153,7 @@ public class BBdd_con_ins {
 				}
 			}
 			statement.executeUpdate();
+			System.out.println("Se ha insertado jugador");
 			return id;
 		} catch (SQLException e) {
 			e.printStackTrace();
@@ -189,5 +188,41 @@ public class BBdd_con_ins {
 				e.printStackTrace();
 			}
 		}
+	}
+
+	public List<Apuestas> seleccionarApuestas(Connection connection) throws SQLException {
+		List<Apuestas> apuestas = new ArrayList<>();
+		ResultSet resultados = null;
+		String sql = "SELECT * FROM APUESTA  ";
+
+		try {
+
+			// Preparar la sentencia
+			PreparedStatement sentencia = connection.prepareStatement(sql);
+			resultados = sentencia.executeQuery();
+			while (resultados.next()) {
+				double precio = resultados.getDouble("precio");
+
+				long premio = resultados.getLong("premio");
+
+				String fecha = resultados.getNString("fecha");
+				String apuesta = resultados.getNString("apuesta");
+				String jugador = resultados.getNString("jugador");
+				Apuestas apuesta1 = new Apuestas();
+				apuestas.add(apuesta1);
+			}
+
+		} catch (SQLException e) {
+			e.printStackTrace();
+			throw e;
+
+		} finally {
+			if (resultados != null) {
+				resultados.close();
+			}
+
+		}
+		return apuestas;
+
 	}
 }
