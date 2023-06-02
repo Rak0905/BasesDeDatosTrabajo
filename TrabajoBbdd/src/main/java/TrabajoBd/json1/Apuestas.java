@@ -1,24 +1,24 @@
 package TrabajoBd.json1;
 
-import java.sql.Date;
 import com.fasterxml.jackson.annotation.JsonInclude;
-import com.fasterxml.jackson.databind.ObjectMapper;
 
 @JsonInclude(JsonInclude.Include.NON_NULL)
 public class Apuestas {
 
 	private int id;
+	private double precio;
 	private String fecha;
-	private String fechayHoraCelebracion;
+	private double premio;
 	private String apuesta;
 	private Jugador jugador;
 	private Sorteo sorteo;
 
-	public Apuestas(int id, String fecha, String fechayHoraCelebracion, String apuesta, Jugador jugador,
+	public Apuestas(int id, double precio, String fecha, double premio, String apuesta, Jugador jugador,
 			Sorteo sorteo) {
 		this.id = id;
+		this.precio = precio;
 		this.fecha = fecha;
-		this.fechayHoraCelebracion = fechayHoraCelebracion;
+		this.premio = premio;
 		this.apuesta = apuesta;
 		this.jugador = jugador;
 		this.sorteo = sorteo;
@@ -44,12 +44,20 @@ public class Apuestas {
 		this.fecha = fecha;
 	}
 
-	public String getFechayHoraCelebracion() {
-		return fechayHoraCelebracion;
+	public double getPrecio() {
+		return precio;
 	}
 
-	public void setFechayHoraCelebracion(String fechayHoraCelebracion) {
-		this.fechayHoraCelebracion = fechayHoraCelebracion;
+	public void setPrecio(double precio) {
+		this.precio = precio;
+	}
+
+	public double getPremio() {
+		return premio;
+	}
+
+	public void setPremio(double premio) {
+		this.premio = premio;
 	}
 
 	public String getApuesta() {
@@ -92,8 +100,8 @@ public class Apuestas {
 
 	@Override
 	public String toString() {
-		return "Apuestas [id=" + id + ", fecha=" + fecha + ", fechayHoraCelebracion=" + fechayHoraCelebracion
-				+ ", apuesta=" + apuesta + ", jugador=" + jugador + ", sorteo=" + sorteo + "]";
+		return "Apuestas [id=" + id + ", fecha=" + fecha + ", fechayHoraCelebracion=" + premio + ", apuesta=" + apuesta
+				+ ", jugador=" + jugador + ", sorteo=" + sorteo + "]";
 	}
 
 }

@@ -60,13 +60,13 @@ public class BBdd_con_ins {
 		long id = 0;
 		try {
 
-			String sql = "INSERT INTO sorteo (fechaApertura,fechaCierre,fechaCelebracion,combinacionGanadora) VALUES (?, ?, ?, ?)";
-			statement = connection.prepareStatement(sql,statement.RETURN_GENERATED_KEYS);
+			String sql = "INSERT INTO sorteo (fechaApertura,fechaCierre,fechaCelebracion,ganadora) VALUES (?, ?, ?, ?)";
+			statement = connection.prepareStatement(sql, statement.RETURN_GENERATED_KEYS);
 			statement.setString(1, sorteo.getFechaApertura());
 			statement.setString(2, sorteo.getFechaCierre());
 			statement.setString(3, sorteo.getFechaCelebracion());
 			statement.setString(4, sorteo.getGanadora());
-			
+
 			if (statement.executeUpdate() > 0) {
 				generatedKeys = statement.getGeneratedKeys();
 				if (generatedKeys.next()) {
@@ -91,7 +91,7 @@ public class BBdd_con_ins {
 		return id;
 	}
 
-	public static void insertApuesta(Apuestas apuesta, Connection connection, long ids1, long idj) {
+	public static void insertApuesta(Apuestas apuesta, Connection connection, long s, long idj) {
 		PreparedStatement statement = null;
 		try {
 			// Verificar saldo suficiente del jugador
@@ -104,16 +104,20 @@ public class BBdd_con_ins {
 				apuesta.getJugador().setSaldo(saldoJugador - montoApuesta);
 				updateSaldo(apuesta.getJugador(), connection); // Método para actualizar saldo del jugador
 
-				String sql = "INSERT INTO apuesta (precio, premio, fecha, apuesta, jugador_id, sorteo_id) VALUES (?, ?, ?, ?, ?)";
+				String sql = "INSERT INTO apuesta (id, precio, premio, fecha, apuestas, jugador, sorteo) VALUES (?, ?, ?, ?, ?, ?, ?)";
 				statement = connection.prepareStatement(sql);
-				statement.setString(1, apuesta.getFecha());
-				statement.setString(2, apuesta.getFechayHoraCelebracion());
-				statement.setString(3, apuesta.getApuesta());
-				statement.setInt(4, (int) idj);
-				statement.setInt(5, (int) ids1);
+				statement.setInt(1, apuesta.getId());
+				statement.setDouble(2, apuesta.getPrecio());
+				statement.setDouble(3, apuesta.getPremio());
+				statement.setString(4, apuesta.getFecha());
+				statement.setString(5, apuesta.getApuesta());
+				statement.setInt(6, (int) idj);
+				statement.setInt(7, (int) s);
 
 				System.out.println("Se ha insertado apuesta");
-//				statement.executeUpdate();
+				
+				statement.executeUpdate();
+				connection.commit();
 			}
 		} catch (SQLException e) {
 			e.printStackTrace();
@@ -133,13 +137,14 @@ public class BBdd_con_ins {
 		ResultSet generatedKeys = null;
 		long id = 0;
 		try {
-			String sql = "INSERT INTO jugador (correo, dni, contraseña,telefono, saldo) VALUES (?, ?, ?, ?, ?)";
+			String sql = "INSERT INTO jugador (nombre, correo, dni, contraseña,telefono, saldo) VALUES (?, ?, ?, ?, ?, ?)";
 			statement = connection.prepareStatement(sql, statement.RETURN_GENERATED_KEYS);
-			statement.setString(1, jugador.getCorreo());
-			statement.setString(2, jugador.getDni());
-			statement.setString(3, jugador.getContraseña());
-			statement.setString(4, jugador.getTelefono());
-			statement.setDouble(5, jugador.getSaldo());
+			statement.setString(1, jugador.getNombre());
+			statement.setString(2, jugador.getCorreo());
+			statement.setString(3, jugador.getDni());
+			statement.setString(4, jugador.getContraseña());
+			statement.setString(5, jugador.getTelefono());
+			statement.setDouble(6, jugador.getSaldo());
 			if (statement.executeUpdate() > 0) {
 				generatedKeys = statement.getGeneratedKeys();
 				if (generatedKeys.next()) {
@@ -187,22 +192,61 @@ public class BBdd_con_ins {
 	public List<Apuestas> seleccionarApuestas(Connection connection) throws SQLException {
 		List<Apuestas> apuestas = new ArrayList<>();
 		ResultSet resultados = null;
-		String sql = "SELECT * FROM apuesta  ";
+		String sql = "SELECT * FROM apuesta";
+		String sql2 = "SELECT * FROM jugador WHERE id = ?";
+		String sql3 = "SELECT * FROM sorteo WHERE id = ?";
 
 		try {
-
 			// Preparar la sentencia
 			PreparedStatement sentencia = connection.prepareStatement(sql);
 			resultados = sentencia.executeQuery();
+
 			while (resultados.next()) {
+				int id = resultados.getInt("id");
 				double precio = resultados.getDouble("precio");
+				double premio = resultados.getLong("premio");
+				String fecha = resultados.getString("fecha");
+				String apuesta = resultados.getString("apuestas");
+				int jugadorId = resultados.getInt("jugador");
+				int sorteoId = resultados.getInt("sorteo");
 
-				long premio = resultados.getLong("premio");
+				// Obtener el objeto Jugador correspondiente
+				PreparedStatement sentencia2 = connection.prepareStatement(sql2);
+				sentencia2.setInt(1, jugadorId);
+				ResultSet resultados2 = sentencia2.executeQuery();
 
-				String fecha = resultados.getNString("fecha");
-				String apuesta = resultados.getNString("apuesta");
-				String jugador = resultados.getNString("jugador");
-				Apuestas apuesta1 = new Apuestas();
+				Jugador jugador = null;
+				if (resultados2.next()) {
+					// Obtener los datos del jugador
+
+					String nombre = resultados2.getString("nombre");
+					String correo = resultados2.getString("correo");
+					String dni = resultados2.getString("dni");
+					String contraseña = resultados2.getString("contraseña");
+					String telefono = resultados2.getString("telefono");
+					double saldo = resultados2.getDouble("saldo");
+					// Crear el objeto Jugador
+					jugador = new Jugador(nombre, correo, dni, contraseña, telefono, saldo);
+				}
+
+				// Obtener el objeto Sorteo correspondiente
+				PreparedStatement sentencia3 = connection.prepareStatement(sql3);
+				sentencia3.setInt(1, sorteoId);
+				ResultSet resultados3 = sentencia3.executeQuery();
+
+				Sorteo sorteo = null;
+				if (resultados3.next()) {
+					// Obtener los datos del sorteo
+					String fechaApertura = resultados3.getString("fechaApertura");
+					String fechaCierre = resultados3.getString("fechaCierre");
+					String fechaCelebracion = resultados3.getString("fechaCelebracion");
+					String ganadora = resultados3.getString("ganadora");
+
+					// Crear el objeto Sorteo
+					sorteo = new Sorteo(fechaApertura, fechaCierre, fechaCelebracion, ganadora, null);
+				}
+
+				Apuestas apuesta1 = new Apuestas(id, precio, fecha, premio, apuesta, jugador, sorteo);
 				apuestas.add(apuesta1);
 			}
 
